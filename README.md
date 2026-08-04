@@ -22,6 +22,15 @@ npx computeledger-cli keys generate
 pip install computeledger-cli
 ```
 
+*Not yet published to npm or PyPI. Until the first release, build and link from source:*
+
+```bash
+git clone https://github.com/RudrenduPaul/ComputeLedger.git && cd ComputeLedger
+npm install && npm run build && npm link          # TypeScript CLI
+# or
+cd python && pip install -e .                     # Python CLI
+```
+
 ## Quickstart
 
 ```bash
