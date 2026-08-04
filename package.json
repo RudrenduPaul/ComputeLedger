@@ -42,7 +42,14 @@
     "ed25519",
     "finops"
   ],
-  "author": "",
+  "author": {
+    "name": "Rudrendu Paul"
+  },
+  "contributors": [
+    {
+      "name": "Sourav Nandy"
+    }
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/RudrenduPaul/ComputeLedger/issues"

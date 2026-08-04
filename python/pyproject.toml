@@ -12,6 +12,10 @@ requires-python = ">=3.10"
 authors = [
     { name = "Rudrendu Paul" }
 ]
+maintainers = [
+    { name = "Rudrendu Paul" },
+    { name = "Sourav Nandy" }
+]
 keywords = [
     "compute-ledger",
     "gpu-usage",
