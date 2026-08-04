@@ -185,6 +185,24 @@ async function handleRecord(rest: string[], json: boolean): Promise<void> {
     process.exitCode = 1;
     return;
   }
+  let gpuHours: number | undefined;
+  if (gpuHoursRaw !== undefined) {
+    gpuHours = Number.parseFloat(gpuHoursRaw);
+    if (!Number.isFinite(gpuHours) || gpuHours < 0) {
+      printError("--gpu-hours must be a non-negative number", json);
+      process.exitCode = 1;
+      return;
+    }
+  }
+  let estimatedFlops: number | undefined;
+  if (flopsRaw !== undefined) {
+    estimatedFlops = Number.parseFloat(flopsRaw);
+    if (!Number.isFinite(estimatedFlops) || estimatedFlops < 0) {
+      printError("--flops must be a non-negative number", json);
+      process.exitCode = 1;
+      return;
+    }
+  }
 
   const paths = resolvePaths({ local });
   const keyPair = loadKeyPair(paths);
@@ -195,8 +213,8 @@ async function handleRecord(rest: string[], json: boolean): Promise<void> {
       provider,
       hardware,
       durationSeconds,
-      gpuHours: gpuHoursRaw !== undefined ? Number.parseFloat(gpuHoursRaw) : undefined,
-      estimatedFlops: flopsRaw !== undefined ? Number.parseFloat(flopsRaw) : undefined,
+      gpuHours,
+      estimatedFlops,
       workloadType
     },
     ledger.getLastHash(),

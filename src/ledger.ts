@@ -27,7 +27,13 @@ export class Ledger {
     return raw
       .split("\n")
       .filter((line) => line.trim().length > 0)
-      .map((line) => JSON.parse(line) as LedgerEntry);
+      .map((line, index) => {
+        try {
+          return JSON.parse(line) as LedgerEntry;
+        } catch {
+          throw new Error(`Ledger file is corrupted at line ${index + 1}: not valid JSON.`);
+        }
+      });
   }
 
   get(id: string): LedgerEntry | undefined {

@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from "vitest";
-import { mkdtempSync } from "node:fs";
+import { mkdtempSync, appendFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { generateKeyPair } from "./crypto.js";
@@ -67,5 +67,13 @@ describe("Ledger", () => {
     const result = verifyChain([tampered]);
     expect(result.valid).toBe(false);
     expect(result.firstInvalidReason).toBe("hash_mismatch");
+  });
+
+  it("raises a clear error instead of an uncaught crash on a corrupted ledger line", () => {
+    const ledgerPath = join(dir, "ledger.jsonl");
+    mkdirSync(dir, { recursive: true });
+    appendFileSync(ledgerPath, "not valid json\n");
+    const ledger = new Ledger(ledgerPath);
+    expect(() => ledger.readAll()).toThrow(/corrupted at line 1/);
   });
 });
