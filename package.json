@@ -1,0 +1,63 @@
+{
+  "name": "computeledger-cli",
+  "version": "0.1.0",
+  "description": "Provider-agnostic CLI and MCP server that signs, hash-chains, and verifies compute usage receipts (GPU-hours, workload type, hardware) so any third party can audit them without trusting the issuer.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "computeledger": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "audit": "npm audit --audit-level=high",
+    "prepublishOnly": "npm run lint && npm run typecheck && npm run test:coverage && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RudrenduPaul/ComputeLedger.git"
+  },
+  "keywords": [
+    "compute-ledger",
+    "gpu-usage",
+    "compute-attestation",
+    "verifiable-compute",
+    "cli",
+    "mcp",
+    "agent-native",
+    "cryptographic-verification",
+    "ed25519",
+    "finops"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/RudrenduPaul/ComputeLedger/issues"
+  },
+  "homepage": "https://github.com/RudrenduPaul/ComputeLedger#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^4.1.10",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
+    "vitest": "^4.1.10"
+  }
+}
