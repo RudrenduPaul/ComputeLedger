@@ -1,6 +1,6 @@
 {
   "name": "computeledger-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provider-agnostic CLI and MCP server that signs, hash-chains, and verifies compute usage receipts (GPU-hours, workload type, hardware) so any third party can audit them without trusting the issuer.",
   "type": "module",
   "main": "./dist/index.js",
@@ -37,9 +37,12 @@
     "verifiable-compute",
     "cli",
     "mcp",
+    "mcp-server",
     "agent-native",
     "cryptographic-verification",
     "ed25519",
+    "hash-chain",
+    "tamper-evident",
     "finops"
   ],
   "author": {

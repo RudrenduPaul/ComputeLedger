@@ -5,31 +5,40 @@
 ComputeLedger records a compute job's usage (GPU-hours, hardware, duration, workload type) as a cryptographically signed receipt and appends it to a tamper-evident local ledger. Anyone can verify a receipt's authenticity and the ledger's integrity without trusting the issuer, and without buying into any single cloud, chain, or vendor's stack.
 
 [![CI](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml/badge.svg)](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/computeledger-cli.svg)](https://www.npmjs.com/package/computeledger-cli)
+[![PyPI version](https://img.shields.io/pypi/v/computeledger-cli.svg)](https://pypi.org/project/computeledger-cli/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
-
-<!-- TODO: record demo GIF with vhs (computeledger keys generate --local && computeledger run --local -- <job> && computeledger verify) -->
 
 ## Install
 
 ```bash
 npm install -g computeledger-cli
-# or, without installing:
-npx computeledger-cli keys generate
 ```
 
 ```bash
 pip install computeledger-cli
 ```
 
-*Not yet published to npm or PyPI. Until the first release, build and link from source:*
+Both packages install the same `computeledger` command. Receipts are interoperable either way: a receipt signed by the npm binary verifies correctly with the PyPI binary, and vice versa.
 
-```bash
-git clone https://github.com/RudrenduPaul/ComputeLedger.git && cd ComputeLedger
-npm install && npm run build && npm link          # TypeScript CLI
-# or
-cd python && pip install -e .                     # Python CLI
-```
+## Demo
+
+<!-- demo GIF placeholder: docs/demo.gif not yet generated in this repo -->
+
+## Table of contents
+
+- [Quickstart](#quickstart)
+- [Why this exists](#why-this-exists)
+- [Features](#features)
+- [CLI reference](#cli-reference)
+- [MCP / agent-native usage](#mcp--agent-native-usage)
+- [Library API](#library-api)
+- [Comparison](#comparison)
+- [What is ComputeLedger, and why does it exist](#what-is-computeledger-and-why-does-it-exist)
+- [FAQ](#faq)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Quickstart
 
@@ -71,7 +80,7 @@ This is deliberately narrow. It does not compete with GPU marketplaces, cost das
 
 - **Ed25519 signatures via Node's and Python's built-in/standard crypto libraries.** No bespoke cryptography, no external crypto dependency on the TypeScript side.
 - **Hash-chained ledger.** Every receipt embeds the previous receipt's hash. Deleting, reordering, or editing a historical entry breaks the chain in a way `ledger verify` detects, even if the tampered entry's own signature still looks locally valid.
-- **Cross-language interoperability by construction.** A receipt signed by the npm package's `computeledger` binary verifies correctly against the PyPI package's `computeledger` binary, and vice versa: both implementations serialize the receipt payload through the same deterministic canonical-JSON algorithm before hashing.
+- **Cross-language interoperability by construction.** A receipt signed by the npm package's `computeledger` binary verifies correctly against the PyPI package's `computeledger` binary. Both implementations serialize the receipt payload through the same deterministic canonical-JSON algorithm before hashing.
 - **Provider-agnostic.** No account, no API key, no dependency on any specific cloud or chain. Works identically on a laptop, an on-prem cluster, or any cloud VM.
 - **Agent-native.** Every subcommand supports `--json` for structured output, and `computeledger mcp` starts a Model Context Protocol server exposing `record_usage`, `verify_receipt`, `list_ledger`, and `verify_ledger` as callable tools.
 - **No shell-injection surface.** `computeledger run -- <command>` executes the wrapped command via an argument array, never a shell string, so metacharacters in the wrapped command are inert.
@@ -128,16 +137,17 @@ from computeledger import create_receipt, verify_receipt, Ledger, verify_chain, 
 
 ComputeLedger occupies a narrow, specific gap: a portable, cryptographically verifiable usage receipt that doesn't require adopting any single provider's chain or platform. It is not trying to replace the tools below, each of which does a real, different job.
 
-| | ComputeLedger | SkyPilot | OpenCost | AICert (archived) |
+| | ComputeLedger | SkyPilot | OpenCost | AICert |
 |---|---|---|---|---|
 | What it is | Signed, portable usage receipts | Multi-cloud job orchestration + cost | Kubernetes/cloud cost monitoring | Training-provenance attestation |
-| Cryptographic verification | Yes (Ed25519, offline) | No | No | Yes (dead project) |
+| Cryptographic verification | Yes (Ed25519, offline) | No | No | Yes (TPM-based) |
 | Provider lock-in | None | Orchestrates specific clouds | Kubernetes/cloud-native | None |
 | Tamper-evident history | Yes (hash-chained ledger) | No | No | No (single artifact, no chain) |
-| GitHub stars | New | 10,440 | 6,659 (CNCF) | 20, archived June 2024 |
+| GitHub stars | New | 10,441 | 6,659 (CNCF) | 20 |
+| Project activity | Active | Active | Active | No commits since June 2024 |
 | Agent-native (MCP/`--json`) | Yes | Partial (API/SDK) | No | No |
 
-SkyPilot and OpenCost solve real, adjacent problems (running jobs across clouds, and visualizing what they cost) at far larger scale and maturity than this project. Neither produces a signed, independently verifiable usage record. AICert attempted training-compute provenance as a standalone OSS tool and did not find an audience; ComputeLedger's scope is deliberately narrower (a usage receipt, not a full training-provenance framework) and ships both an npm and a PyPI package from day one specifically so the receipt format isn't locked to one language's ecosystem.
+SkyPilot and OpenCost solve real, adjacent problems (running jobs across clouds, and visualizing what they cost) at far larger scale and maturity than this project. Neither produces a signed, independently verifiable usage record. AICert attempted training-compute provenance as a standalone OSS tool using TPM-bound attestation and has had no commits since June 2024; ComputeLedger's scope is deliberately narrower (a usage receipt, not a full training-provenance framework) and ships both an npm and a PyPI package from day one specifically so the receipt format isn't locked to one language's ecosystem.
 
 ## What is ComputeLedger, and why does it exist
 
@@ -159,6 +169,15 @@ No, see the comparison table above. Those tools solve orchestration and cost vis
 
 **Is the receipt format a blockchain?**
 It's a local, hash-chained, append-only log, similar in spirit to a Merkle log or a git commit chain. There's no token, no consensus mechanism, and no network involved.
+
+**Does ComputeLedger work on Windows?**
+The npm and PyPI packages install and run on any platform Node.js 18+ or Python 3.10+ supports, including Windows. One caveat: private key files are written with POSIX permission bits (mode 600), which restrict access on Linux and macOS; Windows does not enforce the same POSIX permission model, so the file is written but the access restriction has no equivalent effect there. CI currently runs on Linux only, so Windows and macOS are not continuously tested upstream.
+
+**Can I use ComputeLedger for commercial projects?**
+Yes. Both the TypeScript and Python packages are licensed Apache-2.0, which permits commercial use, modification, and redistribution, including in closed-source products, as long as the license and copyright notice are preserved.
+
+**What if I need multi-cloud orchestration or a cost dashboard instead?**
+ComputeLedger doesn't do either. It only produces and verifies signed usage receipts. Pair it with SkyPilot for orchestration or OpenCost for cost visibility if you need those.
 
 ## Contributing
 
