@@ -29,11 +29,11 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
-      - name: Test (with coverage)
-        run: npm run test:coverage
-
       - name: Build
         run: npm run build
+
+      - name: Test (with coverage — cli.smoke.test.ts runs against the dist/ build above)
+        run: npm run test:coverage
 
       - name: Security audit (no unfixed HIGH/CRITICAL CVEs)
         run: npm run audit
