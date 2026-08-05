@@ -24,7 +24,7 @@ Both packages install the same `computeledger` command. Receipts are interoperab
 
 ## Demo
 
-<!-- demo GIF placeholder: docs/demo.gif not yet generated in this repo -->
+![ComputeLedger demo: computeledger keys generate --local, computeledger record --local, and computeledger ledger verify --local running against the real CLI](docs/demo.gif)
 
 ## Table of contents
 
