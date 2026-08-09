@@ -8,6 +8,9 @@ This is the Python implementation, published from the same repository as the [np
 
 Repository, issues, and the full project history: [github.com/RudrenduPaul/ComputeLedger](https://github.com/RudrenduPaul/ComputeLedger).
 
+[![npm version](https://img.shields.io/npm/v/computeledger-cli.svg)](https://www.npmjs.com/package/computeledger-cli)
+[![PyPI version](https://img.shields.io/pypi/v/computeledger-cli.svg)](https://pypi.org/project/computeledger-cli/)
+
 ## Install
 
 ```bash
