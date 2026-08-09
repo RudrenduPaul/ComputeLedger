@@ -6,8 +6,7 @@ import { createReceipt, verifyReceipt, type SignedReceipt, type WorkloadType } f
 import { Ledger, verifyChain } from "./ledger.js";
 import { runAndMeasure } from "./run.js";
 import { printResult, printError } from "./output.js";
-
-const VERSION = "0.1.0";
+import { VERSION } from "./version.js";
 
 function hasFlag(args: string[], name: string): boolean {
   return args.includes(name);
