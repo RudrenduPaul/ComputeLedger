@@ -10,6 +10,8 @@ ComputeLedger records a compute job's usage (GPU-hours, hardware, duration, work
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
 
+![ComputeLedger demo: computeledger keys generate --local, computeledger record --local, and computeledger ledger verify --local running against the real CLI](docs/demo.gif)
+
 ## Install
 
 ```bash
@@ -21,10 +23,6 @@ pip install computeledger-cli
 ```
 
 Both packages install the same `computeledger` command. Receipts are interoperable either way: a receipt signed by the npm binary verifies correctly with the PyPI binary, and vice versa.
-
-## Demo
-
-![ComputeLedger demo: computeledger keys generate --local, computeledger record --local, and computeledger ledger verify --local running against the real CLI](docs/demo.gif)
 
 ## Table of contents
 
