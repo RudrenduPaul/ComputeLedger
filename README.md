@@ -64,6 +64,8 @@ computeledger run --local --provider on-prem --hardware nvidia-a100 -- python tr
 
 `run` executes the wrapped command as a real subprocess (never through a shell), measures wall-clock duration, samples GPU utilization via `nvidia-smi` when one is present, and signs + appends the resulting receipt automatically. On a machine with no NVIDIA GPU, it still produces a duration-only receipt.
 
+![ComputeLedger run --wrap demo: computeledger run --local --provider on-prem --hardware nvidia-a100 -- sleep 1 wraps a real job, measures duration, and signs the receipt automatically](docs/demo-run-wrap.gif)
+
 Give the receipt to anyone, on any machine, with no ComputeLedger account and no network call:
 
 ```bash
@@ -105,6 +107,8 @@ computeledger mcp
 | `--local` | Use `./.computeledger` in the current directory instead of `~/.computeledger` |
 | `--json` | Structured JSON on stdout instead of human-readable text |
 | `--no-record-command` | Omit the wrapped command string from the receipt (`run` only) |
+
+![ComputeLedger CLI walkthrough: keys generate --local, record --local, ledger list --local --json, and export --format csv --local running end to end against the real CLI](docs/demo-export-ledger.gif)
 
 ## MCP / agent-native usage
 
