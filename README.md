@@ -1,16 +1,25 @@
 # ComputeLedger
 
-**Sign, hash-chain, and independently verify compute usage, portable across any provider.**
-
-ComputeLedger records a compute job's usage (GPU-hours, hardware, duration, workload type) as a cryptographically signed receipt and appends it to a tamper-evident local ledger. Anyone can verify a receipt's authenticity and the ledger's integrity without trusting the issuer, and without buying into any single cloud, chain, or vendor's stack.
-
 [![CI](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml/badge.svg)](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/computeledger-cli.svg)](https://www.npmjs.com/package/computeledger-cli)
 [![PyPI version](https://img.shields.io/pypi/v/computeledger-cli.svg)](https://pypi.org/project/computeledger-cli/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](package.json)
 
+<p align="center">
+<a href="#install">Install</a> •
+<a href="#quickstart">Quickstart</a> •
+<a href="#features">Features</a> •
+<a href="#cli-reference">CLI reference</a> •
+<a href="#comparison">Comparison</a> •
+<a href="#faq">FAQ</a>
+</p>
+
+**Sign, hash-chain, and independently verify compute usage, portable across any provider.**
+
 ![ComputeLedger demo: computeledger keys generate --local, computeledger record --local, and computeledger ledger verify --local running against the real CLI](docs/demo.gif)
+
+ComputeLedger records a compute job's usage (GPU-hours, hardware, duration, workload type) as a cryptographically signed receipt and appends it to a tamper-evident local ledger. Anyone can verify a receipt's authenticity and the ledger's integrity without trusting the issuer, and without buying into any single cloud, chain, or vendor's stack.
 
 ## Install
 
@@ -23,20 +32,6 @@ pip install computeledger-cli
 ```
 
 Both packages install the same `computeledger` command. Receipts are interoperable either way: a receipt signed by the npm binary verifies correctly with the PyPI binary, and vice versa.
-
-## Table of contents
-
-- [Quickstart](#quickstart)
-- [Why this exists](#why-this-exists)
-- [Features](#features)
-- [CLI reference](#cli-reference)
-- [MCP / agent-native usage](#mcp--agent-native-usage)
-- [Library API](#library-api)
-- [Comparison](#comparison)
-- [What is ComputeLedger, and why does it exist](#what-is-computeledger-and-why-does-it-exist)
-- [FAQ](#faq)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Quickstart
 
