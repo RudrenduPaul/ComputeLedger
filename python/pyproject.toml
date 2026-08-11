@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "computeledger-cli"
-version = "0.1.3"
+version = "0.1.4"
 description = "Provider-agnostic CLI and MCP server that signs, hash-chains, and verifies compute usage receipts (GPU-hours, workload type, hardware) so any third party can audit them without trusting the issuer."
 readme = "README.md"
 license = "Apache-2.0"
