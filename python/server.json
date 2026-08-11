@@ -1,0 +1,40 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.RudrenduPaul/computeledger",
+  "description": "Signs, hash-chains, and verifies compute usage receipts via an MCP server, no issuer trust required.",
+  "repository": {
+    "url": "https://github.com/RudrenduPaul/ComputeLedger",
+    "source": "github"
+  },
+  "version": "0.1.3",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "computeledger-cli",
+      "version": "0.1.3",
+      "runtimeHint": "uvx",
+      "runtimeArguments": [
+        {
+          "type": "named",
+          "name": "--from",
+          "value": "computeledger-cli"
+        }
+      ],
+      "packageArguments": [
+        {
+          "type": "positional",
+          "valueHint": "script_name",
+          "value": "computeledger"
+        },
+        {
+          "type": "positional",
+          "valueHint": "subcommand",
+          "value": "mcp"
+        }
+      ],
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+<!-- mcp-name: io.github.RudrenduPaul/computeledger -->
+
 # computeledger-cli (Python)
 
 **Sign, hash-chain, and independently verify compute usage, portable across any provider.**
