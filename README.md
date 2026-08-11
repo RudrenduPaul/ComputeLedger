@@ -1,5 +1,8 @@
 # ComputeLedger
 
+<!-- mcp-name: io.github.RudrenduPaul/computeledger -->
+<!-- Ownership-proof string for registry.modelcontextprotocol.io publishing. Do not remove. -->
+
 [![CI](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml/badge.svg)](https://github.com/RudrenduPaul/ComputeLedger/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/computeledger-cli.svg)](https://www.npmjs.com/package/computeledger-cli)
 [![PyPI version](https://img.shields.io/pypi/v/computeledger-cli.svg)](https://pypi.org/project/computeledger-cli/)
@@ -103,22 +106,43 @@ computeledger mcp
 
 ![ComputeLedger CLI walkthrough: keys generate --local, record --local, ledger list --local --json, and export --format csv --local running end to end against the real CLI](docs/demo-export-ledger.gif)
 
-## MCP / agent-native usage
+## MCP Server
 
-Add ComputeLedger as an MCP server (stdio transport):
+ComputeLedger ships a [Model Context Protocol](https://modelcontextprotocol.io) server so an AI agent (Claude, Cursor, or any MCP-compatible client) can record and verify compute usage receipts directly, without a human invoking the CLI by hand. The Python package exposes the server as a subcommand rather than a separate console script, so `computeledger mcp` is the real invocation, not `computeledger-mcp`.
+
+```bash
+pip install computeledger-cli
+```
+
+Add it to your MCP client's config (for Claude Desktop, `claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
     "computeledger": {
-      "command": "npx",
-      "args": ["computeledger-cli", "mcp"]
+      "command": "uvx",
+      "args": ["--from", "computeledger-cli", "computeledger", "mcp"]
     }
   }
 }
 ```
 
-Exposed tools: `record_usage(provider, hardware, durationSeconds, gpuHours?, estimatedFlops?, workloadType?, local?)`, `verify_receipt(receipt)`, `list_ledger(local?)`, `verify_ledger(local?)`. Every tool returns the same structured JSON shape the CLI's `--json` mode produces.
+The server exposes four tools, matching the CLI one-for-one:
+
+- `record_usage(provider, hardware, durationSeconds, gpuHours?, estimatedFlops?, workloadType?, local?)`: signs a usage entry with the local Ed25519 key, appends it to the hash-chained ledger, and returns the signed receipt.
+- `verify_receipt(receipt)`: independently verifies a receipt's signature and hash integrity.
+- `list_ledger(local?)`: lists every receipt recorded in the local ledger.
+- `verify_ledger(local?)`: verifies every entry's signature plus the unbroken hash chain across the whole ledger.
+
+Example call:
+
+```
+record_usage(provider="lambda-labs", hardware="nvidia-h100", durationSeconds=3600, gpuHours=1, workloadType="training")
+```
+
+Transport is stdio, so there is nothing to host: the MCP client spawns the server as a local subprocess. Source: [`python/src/computeledger/mcp/server.py`](python/src/computeledger/mcp/server.py).
+
+The npm package exposes the same four tools through the native TypeScript server (`src/mcp/server.ts`), invoked the same way with `npx computeledger-cli mcp`. Both implementations are cross-verified interoperable, and every tool returns the same structured JSON shape the CLI's `--json` mode produces.
 
 ## Library API
 
