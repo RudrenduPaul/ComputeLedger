@@ -18,6 +18,8 @@
 <a href="#faq">FAQ</a>
 </p>
 
+<a href="https://www.producthunt.com/products/github-473?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-computeledger" target="_blank" rel="noopener noreferrer"><img alt="ComputeLedger - Cryptographically signed compute-usage receipts | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1222893&theme=light&t=1786882063757"></a>
+
 **Sign, hash-chain, and independently verify compute usage, portable across any provider.**
 
 ![ComputeLedger demo: computeledger keys generate --local, computeledger record --local, and computeledger ledger verify --local running against the real CLI](docs/demo.gif)
